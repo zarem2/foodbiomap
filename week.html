@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 3 — Advocacy Case Proposals | Jandal's Angels</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #1C1917;
+  --paper:  #FAF6EE;
+  --cream:  #F0EAD8;
+  --warm:   #E8DFC8;
+  --border: #D4C9A8;
+  --muted:  #8C7E65;
+  --accent: #2D6A2D;
+  --red:    #C8440A;
+  --yellow: #F5C842;
+  --shadow: 0 6px 24px rgba(0,0,0,0.09);
+  --shadow-lg: 0 14px 40px rgba(0,0,0,0.14);
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--paper);
+  min-height:100vh;
+  color:var(--ink);
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23D4C9A8' fill-opacity='0.28' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* ── HEADER ── */
+.site-header {
+  border-bottom:2px solid var(--border);
+  padding:1rem 1.5rem;
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--paper);
+  position:sticky; top:0; z-index:100;
+  gap:12px; flex-wrap:wrap;
+}
+.header-brand { display:flex; align-items:center; gap:10px; }
+.week-tag {
+  background:var(--ink); color:#fff;
+  font-size:0.63rem; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; padding:3px 10px; border-radius:999px;
+  white-space:nowrap;
+}
+.header-brand h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1rem,3vw,1.4rem);
+  font-weight:900; color:var(--ink); line-height:1;
+}
+.header-brand h1 em { color:var(--accent); font-style:normal; }
+.header-right { display:flex; align-items:center; gap:10px; }
+.post-count-pill {
+  background:var(--cream); border:1.5px solid var(--border);
+  border-radius:999px; padding:5px 14px;
+  font-size:0.78rem; font-weight:700; color:var(--muted);
+  white-space:nowrap;
+}
+.post-count-pill b { color:var(--ink); }
+.btn-post {
+  background:var(--accent); color:#fff; border:none;
+  border-radius:999px; padding:8px 20px;
+  font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:700;
+  cursor:pointer; transition:transform 0.15s, background 0.15s;
+  white-space:nowrap;
+}
+.btn-post:hover { background:#1D4D1D; transform:translateY(-2px); }
+
+/* ── PAGE TITLE STRIP ── */
+.page-strip {
+  border-bottom:1.5px solid var(--border);
+  padding:1.6rem 1.5rem 1.4rem;
+  max-width:1100px; margin:0 auto;
+}
+.page-strip .label {
+  font-size:0.68rem; font-weight:800; letter-spacing:2px;
+  text-transform:uppercase; color:var(--muted); display:block;
+  margin-bottom:4px;
+}
+.page-strip h2 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.5rem,4vw,2.2rem);
+  font-weight:900; color:var(--ink); line-height:1.1;
+}
+
+/* ── WALL GRID ── */
+.wall-grid {
+  max-width:1100px; margin:1.8rem auto 5rem;
+  padding:0 1.5rem;
+  columns:3 280px; column-gap:16px;
+}
+
+/* ── CAMPAIGN CARD ── */
+.camp-card {
+  break-inside:avoid; margin-bottom:16px;
+  background:#fff;
+  border:1.5px solid var(--border);
+  border-radius:18px;
+  padding:1.3rem 1.3rem 1rem;
+  animation:cardDrop 0.45s cubic-bezier(0.34,1.56,0.64,1) both;
+  box-shadow:var(--shadow);
+  position:relative;
+}
+/* subtle left accent strip, color cycles through a warm palette */
+.camp-card::before {
+  content:''; position:absolute;
+  left:0; top:16px; bottom:16px;
+  width:4px; border-radius:0 4px 4px 0;
+  background:var(--card-accent, var(--accent));
+}
+@keyframes cardDrop {
+  from{ transform:translateY(-16px) scale(0.93); opacity:0; }
+  to  { transform:translateY(0)     scale(1);    opacity:1; }
+}
+
+.card-title {
+  font-family:'Playfair Display',serif;
+  font-size:1rem; font-weight:700;
+  color:var(--ink); line-height:1.35;
+  margin-bottom:0.65rem;
+  padding-left:10px;
+}
+
+.card-content {
+  font-size:0.8rem; font-weight:500;
+  color:#3D3530; line-height:1.65;
+  padding-left:10px;
+  white-space:pre-wrap;
+}
+
+.card-footer {
+  margin-top:1rem; padding-left:10px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:6px;
+  border-top:1px solid var(--border); padding-top:0.7rem;
+}
+.card-author {
+  font-size:0.67rem; font-weight:700; color:var(--muted);
+  display:flex; align-items:center; gap:4px;
+}
+.card-reactions { display:flex; gap:4px; }
+.react-btn {
+  background:var(--cream); border:1px solid var(--border);
+  border-radius:999px; padding:3px 9px;
+  font-size:0.67rem; font-weight:700; cursor:pointer;
+  transition:transform 0.15s, background 0.15s;
+  display:flex; align-items:center; gap:3px; color:var(--ink);
+}
+.react-btn:hover { transform:scale(1.15); background:var(--warm); }
+.react-btn.reacted { background:var(--yellow); border-color:#D4A800; }
+
+/* ── EMPTY / LOADING ── */
+.state-center {
+  column-span:all; text-align:center;
+  padding:4rem 1rem;
+}
+.spinner {
+  width:36px; height:36px; border:3px solid var(--border);
+  border-top-color:var(--accent); border-radius:50%;
+  animation:spin 0.8s linear infinite; margin:0 auto 1rem;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+.state-center h3 {
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem; font-weight:900; color:var(--ink); margin-bottom:0.4rem;
+}
+.state-center p { font-size:0.85rem; color:var(--muted); font-weight:500; line-height:1.7; }
+.float-emoji { font-size:3.5rem; display:block; margin-bottom:1rem;
+  animation:floatY 3s ease-in-out infinite; }
+@keyframes floatY{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+/* ── MODAL ── */
+#modal-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(28,25,23,0.5); z-index:200;
+  align-items:center; justify-content:center;
+  padding:1rem; backdrop-filter:blur(4px);
+}
+#modal-overlay.open { display:flex; }
+
+.modal-box {
+  background:var(--paper); border-radius:24px;
+  padding:2rem; max-width:520px; width:100%;
+  max-height:90vh; overflow-y:auto;
+  box-shadow:var(--shadow-lg);
+  border:2px solid var(--border);
+  animation:modalIn 0.32s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes modalIn{
+  from{ transform:scale(0.88) translateY(16px); opacity:0; }
+  to  { transform:scale(1)    translateY(0);    opacity:1; }
+}
+
+.modal-header {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  margin-bottom:1.4rem; gap:1rem;
+}
+.modal-header h2 {
+  font-family:'Playfair Display',serif;
+  font-size:1.35rem; font-weight:900; color:var(--ink); line-height:1.2;
+}
+.modal-header p { font-size:0.75rem; color:var(--muted); font-weight:500; margin-top:3px; }
+.modal-close {
+  width:34px; height:34px; border-radius:999px;
+  background:var(--cream); border:1.5px solid var(--border);
+  font-size:1rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; transition:background 0.15s;
+}
+.modal-close:hover { background:var(--warm); }
+
+.form-group { margin-bottom:1.1rem; }
+.form-label {
+  display:block; font-size:0.7rem; font-weight:800;
+  letter-spacing:1.2px; text-transform:uppercase;
+  color:var(--muted); margin-bottom:5px;
+}
+.form-label span { color:var(--red); }
+.form-input, .form-textarea {
+  width:100%; background:var(--cream);
+  border:1.5px solid var(--border); border-radius:10px;
+  padding:10px 13px; font-family:'DM Sans',sans-serif;
+  font-size:0.87rem; font-weight:500; color:var(--ink);
+  outline:none; resize:vertical;
+  transition:border-color 0.15s, box-shadow 0.15s;
+}
+.form-input:focus, .form-textarea:focus {
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(45,106,45,0.1);
+}
+.form-textarea { min-height:160px; line-height:1.65; }
+.char-count { font-size:0.63rem; font-weight:700; color:var(--muted); text-align:right; margin-top:3px; }
+.char-count.over { color:var(--red); }
+
+.form-divider { height:1px; background:var(--border); margin:1.1rem 0; }
+
+.anon-row {
+  display:flex; align-items:center; gap:10px;
+  background:var(--cream); border:1.5px solid var(--border);
+  border-radius:10px; padding:10px 13px; cursor:pointer;
+  user-select:none; transition:background 0.15s;
+}
+.anon-row:hover { background:var(--warm); }
+.anon-row input { width:16px; height:16px; accent-color:var(--accent); cursor:pointer; flex-shrink:0; }
+.anon-row-text .anon-title { font-size:0.82rem; font-weight:700; color:var(--ink); }
+.anon-row-text .anon-sub   { font-size:0.67rem; color:var(--muted); font-weight:500; }
+
+.submit-btn {
+  width:100%; padding:13px;
+  background:var(--accent); color:#fff;
+  border:none; border-radius:12px;
+  font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:700;
+  cursor:pointer; margin-top:0.6rem;
+  transition:all 0.15s;
+}
+.submit-btn:hover { background:#1D4D1D; transform:translateY(-2px); box-shadow:0 6px 18px rgba(45,106,45,0.22); }
+.submit-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
+
+/* ── TOAST ── */
+#toast {
+  position:fixed; bottom:24px; left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--ink); color:#fff;
+  padding:10px 24px; border-radius:999px;
+  font-size:0.87rem; font-weight:700;
+  z-index:999; opacity:0; pointer-events:none;
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+  white-space:nowrap; max-width:90vw;
+}
+#toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+#toast.good { background:var(--accent); }
+#toast.bad  { background:var(--red); }
+
+@media(max-width:600px){
+  .wall-grid{ columns:1; }
+  .page-strip{ padding:1.2rem 1rem 1rem; }
+  .site-header{ padding:0.8rem 1rem; }
+}
+
+nav{border-bottom:2px solid #D4C9A8;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:#FAF6EE;position:sticky;top:0;z-index:200;gap:12px;flex-wrap:wrap}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand .group-tag{background:#1C1917;color:#fff;font-size:0.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:999px;font-family:'DM Sans',sans-serif}
+.nav-brand span.name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#1C1917}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-link{padding:5px 13px;border-radius:999px;border:1.5px solid #D4C9A8;font-size:0.75rem;font-weight:700;color:#8C7E65;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all 0.15s;background:transparent}
+.nav-link:hover,.nav-link.active{background:#1C1917;color:#fff;border-color:#1C1917}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-brand">
+    <span class="group-tag">Jandal's Angels</span>
+    <span class="name">🍽️ Toni Fowler's Restaurant</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="week1.html">Week 1</a>
+    <a class="nav-link" href="week2.html">Week 2</a>
+    <a class="nav-link active" href="week3.html">Week 3</a>
+    <a class="nav-link" href="week4.html">Week 4</a>
+  </div>
+</nav>
+
+<!-- ── HEADER ── -->
+<header class="site-header" style="display:none">
+  <div class="header-brand">
+    <span class="week-tag">Week 3</span>
+    <h1>Dingding ng <em>Dignidad</em> 🌾</h1>
+  </div>
+  <div class="header-right">
+    <div class="post-count-pill"><b id="post-count">0</b> posted</div>
+    <button class="btn-post" onclick="openModal()">✏️ Post</button>
+  </div>
+</header>
+<div style="border-bottom:1.5px solid #D4C9A8;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:#FAF6EE;flex-wrap:wrap;gap:10px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <span style="background:#2D6A2D;color:#fff;font-size:0.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:999px;font-family:'DM Sans',sans-serif">Week 3</span>
+    <span style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:#1C1917">Advocacy Case Proposals</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <div class="post-count-pill"><b id="post-count">0</b> posted</div>
+    <button class="btn-post" onclick="openModal()">✏️ Post</button>
+  </div>
+</div>
+<div class="page-strip" style="display:none">
+  <span class="label">Week 3 · Just Food</span>
+  <h2>Advocacy Case Study</h2>
+</div>
+
+<!-- ── WALL ── -->
+<div class="wall-grid" id="wall-grid">
+  <div class="state-center">
+    <div class="spinner"></div>
+    <p style="color:var(--muted);font-weight:600">Loading campaigns…</p>
+  </div>
+</div>
+
+<!-- ── POST MODAL ── -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <h2>Propose Your Advocacy</h2>
+        <p>Design a "Just Food" campaign within the Filipino context.</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="inp-title">Advocacy Title <span>*</span></label>
+      <input class="form-input" id="inp-title" type="text" maxlength="100"
+        placeholder="e.g. Pagkain para sa Lahat, Hindi para sa Basura"
+        oninput="countChars('inp-title','title-count',100)">
+      <div class="char-count" id="title-count">0 / 100</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="inp-content">Campaign Content <span>*</span></label>
+      <textarea class="form-textarea" id="inp-content" maxlength="800"
+        placeholder="Describe your campaign — include your strategy to reduce food waste and how it acknowledges the dignity of people who produce the food…"
+        oninput="countChars('inp-content','content-count',800)"></textarea>
+      <div class="char-count" id="content-count">0 / 800</div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <div class="form-group">
+      <label class="form-label" for="inp-name">Your Name</label>
+      <input class="form-input" id="inp-name" type="text" maxlength="60"
+        placeholder="Leave blank to post anonymously">
+      <label class="anon-row" style="margin-top:8px">
+        <input type="checkbox" id="chk-anon" onchange="toggleAnon()">
+        <div class="anon-row-text">
+          <div class="anon-title">Post anonymously 🎭</div>
+          <div class="anon-sub">Your name won't appear on the wall</div>
+        </div>
+      </label>
+    </div>
+
+    <button class="submit-btn" id="submit-btn" onclick="submitPost()">
+      🌾 Post to the Wall
+    </button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const STORE_KEY = 'dingding-v3-posts';
+const REACT_KEY = 'dingding-v3-reactions';
+
+// accent colours that cycle across cards
+const ACCENTS = ['#2D6A2D','#1A4A7A','#8B4513','#6B2D8B','#B8860B','#C8440A','#2A7A6A'];
+
+let allPosts    = [];
+let myReactions = {};
+let refreshInterval = null;
+
+// ── INIT ──
+async function init(){
+  myReactions = JSON.parse(localStorage.getItem(REACT_KEY) || '{}');
+  await loadPosts();
+  startAutoRefresh();
+}
+
+// ── STORAGE ──
+async function loadPosts(){
+  try {
+    const res = await window.storage.get(STORE_KEY, true);
+    allPosts = res ? JSON.parse(res.value) : [];
+  } catch(e){ allPosts = []; }
+  renderWall();
+}
+
+async function savePosts(){
+  try { await window.storage.set(STORE_KEY, JSON.stringify(allPosts), true); }
+  catch(e){ console.error(e); }
+}
+
+// ── RENDER ──
+function renderWall(){
+  const grid = document.getElementById('wall-grid');
+  document.getElementById('post-count').textContent = allPosts.length;
+
+  if(allPosts.length === 0){
+    grid.innerHTML = `<div class="state-center">
+      <span class="float-emoji">🌱</span>
+      <h3>Walang campaigns pa.</h3>
+      <p>Be the first to post your Just Food advocacy on this wall.</p>
+    </div>`;
+    return;
+  }
+
+  const sorted = [...allPosts].reverse();
+  grid.innerHTML = sorted.map((p, i) => cardHTML(p, i)).join('');
+}
+
+function cardHTML(p, i){
+  const accent  = ACCENTS[i % ACCENTS.length];
+  const ts      = new Date(p.timestamp).toLocaleString('en-PH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  const r       = p.reactions || {support:0,fire:0,rice:0};
+  const myR     = myReactions[p.id] || {};
+  const author  = p.anon ? '🎭 Anonymous' : '👤 ' + esc(p.author || 'Anonymous');
+
+  return `<div class="camp-card" style="--card-accent:${accent};animation-delay:${i*0.045}s" id="card-${p.id}">
+    <div class="card-title">${esc(p.title)}</div>
+    <div class="card-content">${esc(p.content)}</div>
+    <div class="card-footer">
+      <div class="card-author">${author} · ${ts}</div>
+      <div class="card-reactions">
+        <button class="react-btn ${myR.support?'reacted':''}" onclick="react('${p.id}','support')">💚 <span id="rs-${p.id}">${r.support||0}</span></button>
+        <button class="react-btn ${myR.fire?'reacted':''}"    onclick="react('${p.id}','fire')">🔥 <span id="rf-${p.id}">${r.fire||0}</span></button>
+        <button class="react-btn ${myR.rice?'reacted':''}"    onclick="react('${p.id}','rice')">🌾 <span id="rr-${p.id}">${r.rice||0}</span></button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function esc(s){
+  return String(s||'')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── REACTIONS ──
+async function react(postId, type){
+  const post = allPosts.find(p => p.id === postId);
+  if(!post) return;
+  post.reactions = post.reactions || {support:0,fire:0,rice:0};
+  myReactions[postId] = myReactions[postId] || {};
+
+  const on = !myReactions[postId][type];
+  myReactions[postId][type] = on;
+  post.reactions[type] = Math.max(0, (post.reactions[type]||0) + (on ? 1 : -1));
+  localStorage.setItem(REACT_KEY, JSON.stringify(myReactions));
+
+  const prefix = {support:'rs',fire:'rf',rice:'rr'}[type];
+  const countEl = document.getElementById(`${prefix}-${postId}`);
+  if(countEl) countEl.textContent = post.reactions[type];
+  const card = document.getElementById(`card-${postId}`);
+  const btns = card?.querySelectorAll('.react-btn');
+  const idx  = {support:0,fire:1,rice:2}[type];
+  if(btns?.[idx]) btns[idx].classList.toggle('reacted', on);
+
+  await savePosts();
+}
+
+// ── MODAL ──
+function openModal(){
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if(e.target === document.getElementById('modal-overlay')) closeModal();
+});
+
+function toggleAnon(){
+  const anon = document.getElementById('chk-anon').checked;
+  const nameEl = document.getElementById('inp-name');
+  nameEl.disabled = anon;
+  if(anon) nameEl.value = '';
+}
+
+function countChars(inputId, countId, max){
+  const len = document.getElementById(inputId).value.length;
+  const el  = document.getElementById(countId);
+  el.textContent = `${len} / ${max}`;
+  el.classList.toggle('over', len >= max * 0.9);
+}
+
+// ── SUBMIT ──
+async function submitPost(){
+  const title   = document.getElementById('inp-title').value.trim();
+  const content = document.getElementById('inp-content').value.trim();
+  const name    = document.getElementById('inp-name').value.trim();
+  const anon    = document.getElementById('chk-anon').checked;
+
+  if(!title)   { showToast('⚠️ Add a title for your advocacy!','bad'); return; }
+  if(!content) { showToast('⚠️ Write your campaign content!','bad'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true; btn.textContent = '⏳ Posting…';
+
+  // fetch latest to avoid overwrites
+  try {
+    const res = await window.storage.get(STORE_KEY, true);
+    allPosts = res ? JSON.parse(res.value) : [];
+  } catch(e){}
+
+  allPosts.push({
+    id:        'p_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
+    title, content,
+    author:    anon ? '' : (name || 'Anonymous'),
+    anon:      anon || !name,
+    timestamp: Date.now(),
+    reactions: {support:0, fire:0, rice:0}
+  });
+
+  await savePosts();
+
+  // reset
+  ['inp-title','inp-content','inp-name'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('chk-anon').checked = false;
+  document.getElementById('inp-name').disabled = false;
+  document.getElementById('title-count').textContent   = '0 / 100';
+  document.getElementById('content-count').textContent = '0 / 800';
+  btn.disabled = false; btn.textContent = '🌾 Post to the Wall';
+
+  closeModal();
+  renderWall();
+  showToast('🌾 Campaign posted! Salamat!','good');
+}
+
+// ── AUTO REFRESH ──
+function startAutoRefresh(){
+  if(refreshInterval) return;
+  refreshInterval = setInterval(async () => {
+    try {
+      const res = await window.storage.get(STORE_KEY, true);
+      const fresh = res ? JSON.parse(res.value) : [];
+      if(fresh.length !== allPosts.length){
+        allPosts = fresh;
+        renderWall();
+      }
+    } catch(e){}
+  }, 12000);
+}
+
+// ── TOAST ──
+function showToast(msg, type){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'show ' + (type||'');
+  clearTimeout(t._t); t._t = setTimeout(() => t.className = '', 2200);
+}
+
+init();
+</script>
+</body>
+</html>
