@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 3 — Advocacy Case Proposals | Jandal's Angels</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FFFBF0;--white:#FFFFFF;--text:#2D2D2D;--muted:#AAA;
+  --green:#52B788;--green-light:#D8F3DC;--green-dark:#2D6A4F;
+  --orange:#F4A261;--red:#FF6B6B;--yellow:#FFD166;--purple:#A78BFA;
+  --shadow:0 6px 20px rgba(0,0,0,0.09);--shadow-hover:0 14px 36px rgba(0,0,0,0.16);
+}
+body{
+  font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;
+  color:var(--text);overflow-x:hidden;
+  background-image:
+    radial-gradient(circle at 8% 15%,#D8F3DC 0%,transparent 35%),
+    radial-gradient(circle at 90% 80%,#FFE8E8 0%,transparent 35%),
+    radial-gradient(circle at 50% 50%,#FFF0E0 0%,transparent 50%);
+}
+
+/* floating decos */
+.deco{position:fixed;pointer-events:none;z-index:0;font-size:2.2rem;opacity:0.13;animation:floatDeco 7s ease-in-out infinite}
+.deco:nth-child(2){animation-delay:-2.5s}.deco:nth-child(3){animation-delay:-4.5s}
+.deco:nth-child(4){animation-delay:-1s}.deco:nth-child(5){animation-delay:-6s}
+@keyframes floatDeco{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-20px) rotate(6deg)}}
+
+/* ── NAV ── */
+nav{
+  background:rgba(255,251,240,0.95);backdrop-filter:blur(8px);
+  border-bottom:3px solid #FFE0B2;padding:0.9rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;gap:10px;flex-wrap:wrap;
+}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-logo{font-size:1.6rem;line-height:1}
+.nav-title{font-family:'Fredoka One',cursive;font-size:1.05rem;color:var(--text)}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-link{font-family:'Fredoka One',cursive;font-size:0.85rem;padding:5px 14px;border-radius:999px;border:2.5px solid #E0D8CC;color:var(--muted);text-decoration:none;transition:all 0.15s;background:transparent}
+.nav-link:hover{background:#D8F3DC;border-color:var(--green);color:var(--green)}
+.nav-link.active{background:var(--green);border-color:var(--green);color:#fff}
+
+/* ── TOP BAR ── */
+.topbar{
+  padding:1rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:3px dashed #D8F3DC;flex-wrap:wrap;gap:10px;
+  position:relative;z-index:1;
+}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.week-badge{background:var(--green);color:#fff;font-family:'Fredoka One',cursive;font-size:0.75rem;padding:4px 14px;border-radius:999px;letter-spacing:1px}
+.topbar-left h2{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--text)}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.count-pill{
+  background:var(--white);border:2.5px solid #E0D8CC;border-radius:999px;
+  font-family:'Fredoka One',cursive;font-size:0.85rem;color:var(--muted);
+  padding:4px 14px;box-shadow:var(--shadow);
+}
+.count-pill b{color:var(--text)}
+.btn-post{
+  background:var(--green);color:#fff;border:none;border-radius:999px;
+  padding:8px 20px;font-family:'Fredoka One',cursive;font-size:0.95rem;
+  cursor:pointer;box-shadow:0 4px 14px rgba(82,183,136,0.35);
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.btn-post:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(82,183,136,0.4)}
+
+/* ── WALL GRID ── */
+.wall-grid{
+  max-width:1080px;margin:2rem auto 5rem;padding:0 1.5rem;
+  columns:3 260px;column-gap:16px;position:relative;z-index:1;
+}
+
+/* ── CAMP CARD ── */
+.camp-card{
+  break-inside:avoid;margin-bottom:16px;
+  background:var(--white);border-radius:24px;
+  border:3px solid transparent;
+  padding:1.3rem 1.3rem 1rem;
+  box-shadow:var(--shadow);
+  animation:cardPop 0.45s cubic-bezier(0.34,1.56,0.64,1) both;
+  position:relative;overflow:hidden;
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.camp-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+@keyframes cardPop{from{transform:scale(0.88) translateY(-12px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.camp-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:var(--card-color,var(--green));border-radius:21px 21px 0 0;
+}
+.camp-card .card-num{
+  position:absolute;top:14px;right:14px;
+  font-family:'Fredoka One',cursive;font-size:0.7rem;color:var(--muted);
+  background:var(--bg);border-radius:999px;padding:2px 8px;border:1.5px solid #E0D8CC;
+}
+.card-title{
+  font-family:'Fredoka One',cursive;font-size:1.05rem;
+  color:var(--text);line-height:1.3;margin-bottom:0.6rem;margin-top:0.3rem;
+}
+.card-content{
+  font-size:0.8rem;font-weight:600;color:#555;line-height:1.65;white-space:pre-wrap;
+}
+.card-footer{
+  margin-top:0.9rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:6px;
+  border-top:2px dashed #F0EAD8;padding-top:0.7rem;
+}
+.card-author{font-size:0.68rem;font-weight:800;color:var(--muted);display:flex;align-items:center;gap:4px}
+.card-reactions{display:flex;gap:4px}
+.react-btn{
+  background:var(--bg);border:2px solid #E0D8CC;border-radius:999px;
+  padding:3px 9px;font-size:0.68rem;font-weight:800;cursor:pointer;
+  transition:transform 0.15s,background 0.15s,border-color 0.15s;
+  display:flex;align-items:center;gap:3px;color:var(--text);
+  font-family:'Nunito',sans-serif;
+}
+.react-btn:hover{transform:scale(1.18)}
+.react-btn.reacted{background:var(--yellow);border-color:#F0B800}
+
+/* ── EMPTY STATE ── */
+.state-center{column-span:all;text-align:center;padding:4rem 1rem}
+.state-emoji{font-size:4rem;display:block;margin-bottom:1rem;animation:floatDeco 3s ease-in-out infinite}
+.state-center h3{font-family:'Fredoka One',cursive;font-size:1.6rem;color:var(--text);margin-bottom:0.4rem}
+.state-center p{font-size:0.88rem;font-weight:700;color:var(--muted)}
+
+/* ── MODAL ── */
+#modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(45,45,45,0.45);z-index:200;
+  align-items:center;justify-content:center;
+  padding:1rem;backdrop-filter:blur(6px);
+}
+#modal-overlay.open{display:flex}
+.modal-box{
+  background:var(--white);border-radius:28px;padding:1.8rem;
+  max-width:500px;width:100%;max-height:90vh;overflow-y:auto;
+  box-shadow:0 24px 60px rgba(0,0,0,0.2);
+  border:3px solid var(--green-light);
+  animation:modalPop 0.32s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes modalPop{from{transform:scale(0.85) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.3rem;gap:1rem}
+.modal-head h2{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--text);line-height:1.2}
+.modal-head p{font-size:0.75rem;font-weight:700;color:var(--muted);margin-top:3px}
+.modal-close{
+  width:36px;height:36px;border-radius:999px;background:var(--bg);
+  border:2.5px solid #E0D8CC;font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-family:'Fredoka One',cursive;color:var(--muted);transition:all 0.15s;
+}
+.modal-close:hover{background:#FFE8E8;border-color:var(--red);color:var(--red)}
+.form-group{margin-bottom:1rem}
+.form-label{display:block;font-family:'Fredoka One',cursive;font-size:0.85rem;color:var(--muted);margin-bottom:5px}
+.form-label span{color:var(--red)}
+.form-input,.form-textarea{
+  width:100%;background:var(--bg);border:2.5px solid #E0D8CC;
+  border-radius:14px;padding:10px 13px;font-family:'Nunito',sans-serif;
+  font-size:0.88rem;font-weight:700;color:var(--text);outline:none;resize:vertical;
+  transition:border-color 0.15s,box-shadow 0.15s;
+}
+.form-input:focus,.form-textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(82,183,136,0.15)}
+.form-textarea{min-height:150px;line-height:1.65}
+.char-count{font-size:0.63rem;font-weight:800;color:var(--muted);text-align:right;margin-top:3px}
+.char-count.over{color:var(--red)}
+.form-divider{height:2.5px;background:var(--green-light);border-radius:999px;margin:1rem 0}
+.anon-row{
+  display:flex;align-items:center;gap:10px;background:var(--bg);
+  border:2.5px solid #E0D8CC;border-radius:14px;padding:10px 13px;
+  cursor:pointer;user-select:none;transition:background 0.15s;margin-top:8px;
+}
+.anon-row:hover{background:var(--green-light);border-color:var(--green)}
+.anon-row input{width:18px;height:18px;accent-color:var(--green);cursor:pointer;flex-shrink:0}
+.anon-title{font-family:'Fredoka One',cursive;font-size:0.9rem;color:var(--text)}
+.anon-sub{font-size:0.68rem;font-weight:700;color:var(--muted)}
+.submit-btn{
+  width:100%;padding:13px;background:var(--green);color:#fff;
+  border:none;border-radius:14px;font-family:'Fredoka One',cursive;
+  font-size:1.05rem;cursor:pointer;margin-top:0.7rem;
+  box-shadow:0 4px 16px rgba(82,183,136,0.35);transition:all 0.15s;
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(82,183,136,0.45)}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:24px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  color:#fff;padding:10px 24px;border-radius:999px;
+  font-family:'Fredoka One',cursive;font-size:1rem;z-index:999;
+  opacity:0;pointer-events:none;
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),opacity 0.3s;
+  white-space:nowrap;max-width:90vw;background:var(--text);
+}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+#toast.good{background:var(--green)}
+#toast.bad{background:var(--red)}
+
+@media(max-width:600px){
+  .wall-grid{columns:1}
+  .topbar{padding:0.8rem 1rem}
+  nav{padding:0.7rem 1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="deco" style="top:6%;left:3%">🌱</div>
+<div class="deco" style="top:18%;right:4%">📢</div>
+<div class="deco" style="top:52%;left:1.5%">✊</div>
+<div class="deco" style="bottom:15%;right:3%">🌾</div>
+
+<nav>
+  <div class="nav-brand">
+    <span class="nav-logo">🍽️</span>
+    <span class="nav-title">Toni Fowler's Restaurant</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">🏠 Home</a>
+    <a class="nav-link" href="week1.html">Week 1</a>
+    <a class="nav-link" href="week2.html">Week 2</a>
+    <a class="nav-link active" href="week3.html">Week 3</a>
+    <a class="nav-link" href="week4.html">Week 4</a>
+  </div>
+</nav>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="week-badge">WEEK 3</span>
+    <h2>Advocacy Case Proposals 📢</h2>
+  </div>
+  <div class="topbar-right">
+    <div class="count-pill"><b id="post-count">0</b> posted</div>
+    <button class="btn-post" onclick="openModal()">✏️ Post!</button>
+  </div>
+</div>
+
+<div class="wall-grid" id="wall-grid">
+  <div class="state-center">
+    <span class="state-emoji">🌱</span>
+    <h3>No posts yet</h3>
+    <p>Be the first to post your advocacy! ✊</p>
+  </div>
+</div>
+
+<!-- ── MODAL ── -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <h2>✊ Your Advocacy</h2>
+        <p>Propose a food campaign for the Filipino context!</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="inp-title">Advocacy Title <span>*</span></label>
+      <input class="form-input" id="inp-title" type="text" maxlength="100"
+        placeholder="e.g. Pagkain para sa Lahat"
+        oninput="countChars('inp-title','title-count',100)">
+      <div class="char-count" id="title-count">0 / 100</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="inp-content">Campaign Content <span>*</span></label>
+      <textarea class="form-textarea" id="inp-content" maxlength="800"
+        placeholder="Describe your campaign and strategy to reduce food waste and how it honors the dignity of our farmers and food producers"
+        oninput="countChars('inp-content','content-count',800)"></textarea>
+      <div class="char-count" id="content-count">0 / 800</div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <div class="form-group">
+      <label class="form-label" for="inp-name">Your Name</label>
+      <input class="form-input" id="inp-name" type="text" maxlength="60"
+        placeholder="Leave blank to post anonymously 🎭">
+      <label class="anon-row">
+        <input type="checkbox" id="chk-anon" onchange="toggleAnon()">
+        <div>
+          <div class="anon-title">Post anonymously </div>
+          <div class="anon-sub">Your name won't appear on the wall</div>
+        </div>
+      </label>
+    </div>
+
+    <button class="submit-btn" onclick="submitPost()">
+      🌾 Post to the Wall!
+    </button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const COLORS = ['#52B788','#F4A261','#FF6B6B','#A78BFA','#FFD166','#4ECDC4','#F9844A'];
+let allPosts    = [];
+let myReactions = JSON.parse(localStorage.getItem('jandal-w3-reactions') || '{}');
+
+// ── RENDER ──
+function renderWall() {
+  const grid = document.getElementById('wall-grid');
+  document.getElementById('post-count').textContent = allPosts.length;
+
+  if (!allPosts.length) {
+    grid.innerHTML = `<div class="state-center">
+      <span class="state-emoji">🌱</span>
+      <h3>No posts yet</h3>
+      <p>Be the first to post your food advocacy! ✊</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = [...allPosts].reverse().map((p, i) => cardHTML(p, i)).join('');
+}
+
+function cardHTML(p, i) {
+  const color  = COLORS[i % COLORS.length];
+  const num    = allPosts.length - i;
+  const ts     = new Date(p.timestamp).toLocaleString('en-PH', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+  const r      = p.reactions || { support:0, fire:0, rice:0 };
+  const myR    = myReactions[p.id] || {};
+  const author = p.anon ? '🎭 Anonymous' : '👤 ' + esc(p.author || 'Anonymous');
+
+  return `<div class="camp-card" style="--card-color:${color};animation-delay:${i*0.05}s;border-color:${color}33" id="card-${p.id}">
+    <div class="card-num">#${num}</div>
+    <div class="card-title">${esc(p.title)}</div>
+    <div class="card-content">${esc(p.content)}</div>
+    <div class="card-footer">
+      <div class="card-author">${author} · ${ts}</div>
+      <div class="card-reactions">
+        <button class="react-btn ${myR.support?'reacted':''}" onclick="react('${p.id}','support')">💚 <span id="rs-${p.id}">${r.support||0}</span></button>
+        <button class="react-btn ${myR.fire?'reacted':''}"    onclick="react('${p.id}','fire')">🔥 <span id="rf-${p.id}">${r.fire||0}</span></button>
+        <button class="react-btn ${myR.rice?'reacted':''}"    onclick="react('${p.id}','rice')">🌾 <span id="rr-${p.id}">${r.rice||0}</span></button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── REACTIONS ──
+function react(postId, type) {
+  const post = allPosts.find(p => p.id === postId);
+  if (!post) return;
+  post.reactions = post.reactions || { support:0, fire:0, rice:0 };
+  myReactions[postId] = myReactions[postId] || {};
+  const on = !myReactions[postId][type];
+  myReactions[postId][type] = on;
+  post.reactions[type] = Math.max(0, (post.reactions[type]||0) + (on?1:-1));
+  localStorage.setItem('jandal-w3-reactions', JSON.stringify(myReactions));
+
+  const ids = { support:'rs', fire:'rf', rice:'rr' };
+  const el  = document.getElementById(`${ids[type]}-${postId}`);
+  if (el) el.textContent = post.reactions[type];
+  const card = document.getElementById(`card-${postId}`);
+  const idx  = { support:0, fire:1, rice:2 }[type];
+  card?.querySelectorAll('.react-btn')[idx]?.classList.toggle('reacted', on);
+}
+
+// ── MODAL ──
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
+function toggleAnon() {
+  const a = document.getElementById('chk-anon').checked;
+  const n = document.getElementById('inp-name');
+  n.disabled = a;
+  if (a) n.value = '';
+}
+function countChars(iid, cid, max) {
+  const l = document.getElementById(iid).value.length;
+  const el = document.getElementById(cid);
+  el.textContent = `${l} / ${max}`;
+  el.classList.toggle('over', l >= max * 0.9);
+}
+
+// ── SUBMIT ──
+function submitPost() {
+  const title   = document.getElementById('inp-title').value.trim();
+  const content = document.getElementById('inp-content').value.trim();
+  const name    = document.getElementById('inp-name').value.trim();
+  const anon    = document.getElementById('chk-anon').checked;
+
+  if (!title)   { showToast('⚠️ Add a title!', 'bad'); return; }
+  if (!content) { showToast('⚠️ Write your campaign!', 'bad'); return; }
+
+  allPosts.push({
+    id       : 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+    title, content,
+    author   : anon ? '' : (name || 'Anonymous'),
+    anon     : anon || !name,
+    timestamp: Date.now(),
+    reactions: { support:0, fire:0, rice:0 }
+  });
+
+  // reset form
+  ['inp-title','inp-content','inp-name'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('chk-anon').checked  = false;
+  document.getElementById('inp-name').disabled = false;
+  document.getElementById('title-count').textContent   = '0 / 100';
+  document.getElementById('content-count').textContent = '0 / 800';
+
+  closeModal();
+  renderWall();
+  showToast('🌾 Campaign posted! Salamat!', 'good');
+}
+
+// ── TOAST ──
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show ' + (type || '');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.className = '', 2400);
+}
+
+// ── BOOT ──
+renderWall();
+</script>
+</body>
+</html>

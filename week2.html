@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 2 — Production Map | Jandal's Angels</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rice-a: #E8A020; --rice-b: #FFF3D0; --rice-c: #7A5C00;
+  --bangus-a: #2196A8; --bangus-b: #D0F4F7; --bangus-c: #0A5060;
+  --itlog-a: #D4550A; --itlog-b: #FDEEDD; --itlog-c: #7A2800;
+  --bg: #FDFAF3;
+  --dark: #1A1A2E;
+  --muted: #888;
+  --white: #FFFFFF;
+  --green: #27AE60;
+  --red: #E74C3C;
+  --shadow: 0 8px 28px rgba(0,0,0,0.12);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.18);
+  --acc: #E8A020;
+  --acc-light: #FFF3D0;
+  --acc-dark: #7A5C00;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body {
+  font-family:'Nunito',sans-serif;
+  background: var(--bg);
+  min-height:100vh;
+  overflow-x:hidden;
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23E8A020' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ══════════════════ SCREENS ══════════════════ */
+.screen { display:none; }
+.screen.active { display:block; }
+
+/* ══════════════════ TITLE SCREEN ══════════════════ */
+#screen-title {
+  min-height:100vh;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:2rem 1rem;
+  text-align:center;
+}
+#screen-title.active { display:flex; }
+
+.title-badge {
+  display:inline-block;
+  background:var(--dark);
+  color:#fff;
+  font-family:'Baloo 2',cursive;
+  font-size:0.78rem;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  padding:6px 18px;
+  border-radius:999px;
+  margin-bottom:1.2rem;
+}
+
+.title-main {
+  font-family:'Baloo 2',cursive;
+  font-size:clamp(2.8rem,8vw,5rem);
+  font-weight:800;
+  color:var(--dark);
+  line-height:1;
+  margin-bottom:0.3rem;
+}
+.title-main em { font-style:normal; color:var(--rice-a); }
+
+.title-sub {
+  font-size:1rem;
+  color:var(--muted);
+  font-weight:700;
+  margin-bottom:2.5rem;
+}
+
+.staple-pick {
+  display:flex; gap:20px; flex-wrap:wrap; justify-content:center;
+  margin-bottom:2rem;
+}
+
+.staple-card {
+  width:170px;
+  background:var(--white);
+  border-radius:24px;
+  padding:1.8rem 1rem 1.4rem;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+  border:3px solid transparent;
+  transition:transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.staple-card::before {
+  content:'';
+  position:absolute; inset:0;
+  opacity:0;
+  transition:opacity 0.2s;
+  border-radius:21px;
+}
+.staple-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); }
+.staple-card.rice:hover   { border-color:var(--rice-a); }
+.staple-card.rice::before { background:var(--rice-b); }
+.staple-card.bangus:hover { border-color:var(--bangus-a); }
+.staple-card.bangus::before { background:var(--bangus-b); }
+.staple-card.itlog:hover  { border-color:var(--itlog-a); }
+.staple-card.itlog::before { background:var(--itlog-b); }
+.staple-card:hover::before { opacity:1; }
+
+.staple-card .s-emoji {
+  font-size:3.5rem;
+  display:block;
+  margin-bottom:0.6rem;
+  position:relative; z-index:1;
+  animation:wobble 3s ease-in-out infinite;
+}
+.staple-card:nth-child(2) .s-emoji { animation-delay:-1s; }
+.staple-card:nth-child(3) .s-emoji { animation-delay:-2s; }
+@keyframes wobble {
+  0%,100%{transform:rotate(-4deg)}
+  50%{transform:rotate(4deg)}
+}
+
+.staple-card .s-name {
+  font-family:'Baloo 2',cursive;
+  font-size:1.2rem; font-weight:800;
+  color:var(--dark);
+  display:block; position:relative; z-index:1;
+}
+.staple-card .s-tagline {
+  font-size:0.72rem; color:var(--muted);
+  font-weight:700; margin-top:3px;
+  display:block; position:relative; z-index:1;
+}
+
+.title-note {
+  font-size:0.8rem; color:var(--muted);
+  font-weight:700; max-width:400px;
+  line-height:1.6;
+}
+
+/* ══════════════════ GAME SCREEN ══════════════════ */
+#screen-game {
+  min-height:100vh;
+  padding:0 0 3rem;
+}
+#screen-game.active { display:block; }
+
+/* top bar */
+.topbar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem 1.5rem;
+  background:var(--white);
+  box-shadow:0 2px 12px rgba(0,0,0,0.07);
+  position:sticky; top:0; z-index:50;
+  flex-wrap:wrap; gap:8px;
+}
+.topbar-left { display:flex; align-items:center; gap:12px; }
+.back-btn {
+  width:38px;height:38px;border-radius:999px;
+  background:var(--bg); border:none; cursor:pointer;
+  font-size:1.1rem; display:flex; align-items:center; justify-content:center;
+  transition:background 0.15s;
+}
+.back-btn:hover{background:#eee}
+.game-title {
+  font-family:'Baloo 2',cursive;
+  font-size:1.2rem; font-weight:800; color:var(--dark);
+}
+.staple-chip {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:4px 12px; border-radius:999px;
+  font-size:0.8rem; font-weight:800; color:#fff;
+}
+.topbar-right { display:flex; gap:10px; align-items:center; }
+.hud-pill {
+  background:var(--bg); border-radius:999px;
+  padding:5px 14px; font-family:'Baloo 2',cursive;
+  font-size:0.95rem; font-weight:700; color:var(--dark);
+  display:flex; align-items:center; gap:5px;
+}
+
+/* progress strip */
+.progress-strip {
+  height:7px; background:#eee;
+}
+.progress-fill {
+  height:100%; width:0%;
+  transition:width 0.5s ease;
+  border-radius:0 4px 4px 0;
+}
+
+/* phase header */
+.phase-header {
+  max-width:880px; margin:2rem auto 1rem;
+  padding:0 1.2rem;
+  display:flex; align-items:flex-start; gap:1rem;
+}
+.phase-number {
+  width:52px;height:52px; border-radius:16px;
+  font-family:'Baloo 2',cursive; font-size:1.4rem; font-weight:800;
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.phase-info h2 {
+  font-family:'Baloo 2',cursive;
+  font-size:1.35rem; font-weight:800; color:var(--dark);
+}
+.phase-info p {
+  font-size:0.83rem; color:var(--muted); font-weight:700;
+  margin-top:3px; line-height:1.5;
+}
+
+/* ── CHAIN BUILDER (drag-to-order) ── */
+.chain-area {
+  max-width:880px; margin:0 auto;
+  padding:0 1.2rem;
+}
+
+.drop-slots {
+  display:flex; flex-direction:column; gap:10px;
+  margin:1rem 0;
+}
+.slot {
+  background:rgba(255,255,255,0.6);
+  border:2.5px dashed #D0C9C0;
+  border-radius:18px; height:78px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.82rem; font-weight:700; color:#BBB;
+  transition:border-color 0.2s, background 0.2s, transform 0.15s;
+  position:relative;
+}
+.slot.drag-over {
+  border-style:solid;
+  transform:scale(1.02);
+}
+.slot.filled { border-style:solid; border-color:transparent; background:transparent; padding:0; }
+.slot-label {
+  position:absolute; left:14px; top:50%;
+  transform:translateY(-50%);
+  font-size:0.7rem; font-weight:800;
+  color:#CCC; letter-spacing:1px; text-transform:uppercase;
+}
+
+.card-pool {
+  display:flex; flex-wrap:wrap; gap:10px;
+  justify-content:center;
+  background:rgba(255,255,255,0.5);
+  border:2px dashed #E0D8CC;
+  border-radius:20px; padding:16px 12px;
+  min-height:100px;
+  margin-bottom:1.5rem;
+}
+
+/* chain card */
+.chain-card {
+  display:flex; align-items:center; gap:10px;
+  background:var(--white);
+  border-radius:16px; padding:10px 16px 10px 12px;
+  box-shadow:var(--shadow);
+  cursor:grab; user-select:none;
+  transition:transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+  border:2.5px solid transparent;
+  animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+  width:100%;
+}
+@keyframes popIn{
+  from{transform:scale(0.5) rotate(-4deg);opacity:0}
+  to{transform:scale(1) rotate(0);opacity:1}
+}
+.chain-card:hover { transform:scale(1.03); box-shadow:var(--shadow-lg); }
+.chain-card:active { cursor:grabbing; }
+.chain-card.dragging { opacity:0.25; transform:scale(0.95); }
+.chain-card .cc-emoji { font-size:2rem; flex-shrink:0; }
+.chain-card .cc-info { flex:1; }
+.chain-card .cc-name { font-family:'Baloo 2',cursive; font-size:1rem; font-weight:800; color:var(--dark); }
+.chain-card .cc-role { font-size:0.7rem; font-weight:700; color:var(--muted); margin-top:1px; }
+.chain-card .cc-price {
+  font-family:'Baloo 2',cursive;
+  font-size:0.85rem; font-weight:800;
+  padding:3px 10px; border-radius:999px;
+  color:#fff; flex-shrink:0;
+}
+.chain-card.correct-flash { border-color:var(--green)!important; background:#E8FDF3; animation:cBounce 0.5s ease; }
+.chain-card.wrong-flash   { border-color:var(--red)!important;   background:#FDECEA; animation:cShake  0.45s ease; }
+@keyframes cBounce{0%{transform:scale(1)}40%{transform:scale(1.12)}70%{transform:scale(0.95)}100%{transform:scale(1)}}
+@keyframes cShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+.check-btn {
+  display:block; margin:0 auto 1rem;
+  padding:13px 36px;
+  font-family:'Baloo 2',cursive; font-size:1.05rem; font-weight:800;
+  color:#fff; border:none; border-radius:999px; cursor:pointer;
+  box-shadow:0 4px 18px rgba(0,0,0,0.18);
+  transition:transform 0.15s, box-shadow 0.15s;
+}
+.check-btn:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,0.22); }
+.check-btn:disabled { opacity:0.45; cursor:not-allowed; transform:none; }
+
+/* ── STRESSOR PHASE ── */
+.stressor-scene {
+  max-width:700px; margin:0 auto; padding:0 1.2rem;
+}
+.stressor-banner {
+  border-radius:20px; padding:1.4rem 1.5rem;
+  margin-bottom:1.2rem; display:flex; align-items:flex-start; gap:14px;
+}
+.stressor-banner .s-icon { font-size:2.8rem; flex-shrink:0; }
+.stressor-banner h3 { font-family:'Baloo 2',cursive; font-size:1.2rem; font-weight:800; color:var(--dark); }
+.stressor-banner p  { font-size:0.82rem; font-weight:700; color:#555; margin-top:4px; line-height:1.6; }
+
+.response-pool {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+  margin-bottom:1.5rem;
+}
+.response-card {
+  background:var(--white);
+  border:2.5px solid #E0D8CC;
+  border-radius:16px; padding:1rem 1rem 0.9rem;
+  cursor:pointer; text-align:center;
+  transition:transform 0.15s, border-color 0.2s, box-shadow 0.15s;
+  box-shadow:0 4px 14px rgba(0,0,0,0.07);
+}
+.response-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
+.response-card .r-emoji { font-size:1.8rem; display:block; margin-bottom:5px; }
+.response-card .r-label { font-family:'Baloo 2',cursive; font-size:0.9rem; font-weight:800; color:var(--dark); }
+.response-card .r-desc  { font-size:0.68rem; font-weight:700; color:var(--muted); margin-top:3px; line-height:1.5; }
+.response-card.correct-pick { border-color:var(--green); background:#E8FDF3; }
+.response-card.wrong-pick   { border-color:var(--red);   background:#FDECEA; }
+
+/* ── PRICE REVEAL ── */
+.price-chain {
+  max-width:700px; margin:0 auto 1.5rem;
+  padding:0 1.2rem;
+  display:flex; flex-direction:column; gap:6px;
+}
+.price-row {
+  display:flex; align-items:center;
+  background:var(--white); border-radius:14px;
+  padding:12px 16px; gap:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,0.07);
+  animation:slideIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes slideIn{from{transform:translateX(-30px);opacity:0}to{transform:translateX(0);opacity:1}}
+.price-row .pr-emoji { font-size:1.7rem; flex-shrink:0; }
+.price-row .pr-actor { font-family:'Baloo 2',cursive; font-size:0.95rem; font-weight:800; color:var(--dark); flex:1; }
+.price-row .pr-price { font-family:'Baloo 2',cursive; font-size:1.1rem; font-weight:800; }
+.price-row .pr-gain  { font-size:0.68rem; font-weight:700; color:var(--muted); }
+.arrow-down { text-align:center; font-size:1.3rem; color:#CCC; margin:0; }
+
+.price-insight {
+  max-width:700px; margin:0 auto 1rem;
+  padding:1rem 1.5rem;
+  border-radius:16px;
+  font-size:0.82rem; font-weight:700; line-height:1.7;
+  color:var(--dark);
+}
+
+/* ── FINAL MAP ── */
+.final-map {
+  max-width:800px; margin:0 auto;
+  padding:0 1.2rem;
+}
+.map-path {
+  display:flex; flex-direction:column; align-items:center; gap:0;
+  margin-bottom:2rem;
+}
+.map-node {
+  width:100%; max-width:500px;
+  background:var(--white);
+  border-radius:20px; padding:14px 18px;
+  display:flex; align-items:center; gap:14px;
+  box-shadow:var(--shadow);
+  border-left:5px solid var(--acc);
+  animation:slideIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.map-node .mn-emoji { font-size:2rem; flex-shrink:0; }
+.map-node .mn-info { flex:1; }
+.map-node .mn-name  { font-family:'Baloo 2',cursive; font-size:1rem; font-weight:800; color:var(--dark); }
+.map-node .mn-desc  { font-size:0.72rem; font-weight:700; color:var(--muted); margin-top:2px; }
+.map-node .mn-price { font-family:'Baloo 2',cursive; font-size:0.88rem; font-weight:800; padding:3px 10px; border-radius:999px; color:#fff; }
+.map-connector {
+  width:3px; height:30px;
+  background:linear-gradient(to bottom, var(--acc), transparent);
+  margin:0 auto;
+}
+.stressor-tag {
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:0.65rem; font-weight:800;
+  padding:2px 8px; border-radius:999px;
+  background:#FEE2E2; color:var(--red);
+  margin-top:4px;
+}
+
+.summary-box {
+  border-radius:20px; padding:1.5rem;
+  margin-bottom:1.5rem; text-align:center;
+}
+.summary-box h3 { font-family:'Baloo 2',cursive; font-size:1.3rem; font-weight:800; color:var(--dark); margin-bottom:1rem; }
+.summary-row { display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.85rem; font-weight:700; color:#555; }
+.summary-row span:last-child { font-family:'Baloo 2',cursive; font-weight:800; color:var(--dark); }
+.summary-divider { height:1px; background:#EEE; margin:10px 0; }
+.summary-gap { font-family:'Baloo 2',cursive; font-size:1.5rem; color:var(--red); font-weight:800; }
+
+.final-msg {
+  border-radius:16px; padding:1.2rem 1.5rem;
+  font-size:0.85rem; font-weight:700; line-height:1.7;
+  text-align:center; margin-bottom:1.5rem;
+}
+
+.play-again-btn {
+  display:block; margin:0 auto;
+  padding:14px 40px;
+  font-family:'Baloo 2',cursive; font-size:1.1rem; font-weight:800;
+  color:#fff; border:none; border-radius:999px; cursor:pointer;
+  background:var(--dark);
+  box-shadow:0 6px 20px rgba(0,0,0,0.2);
+  transition:transform 0.15s;
+}
+.play-again-btn:hover { transform:scale(1.05); }
+
+/* ── TOAST ── */
+#toast {
+  position:fixed; bottom:26px; left:50%;
+  transform:translateX(-50%) translateY(90px);
+  background:var(--dark); color:#fff;
+  padding:12px 28px; border-radius:999px;
+  font-family:'Baloo 2',cursive; font-size:1rem;
+  z-index:999; opacity:0; pointer-events:none;
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+  white-space:nowrap;
+}
+#toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+#toast.good { background:var(--green); }
+#toast.bad  { background:var(--red); }
+
+@media(max-width:560px){
+  .response-pool{grid-template-columns:1fr}
+  .staple-pick{gap:12px}
+  .staple-card{width:140px}
+}
+
+/* ── SHARED FUN NAV ── */
+nav{
+  background:rgba(255,251,240,0.95);backdrop-filter:blur(8px);
+  border-bottom:3px solid #FFE0B2;padding:0.9rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:300;gap:10px;flex-wrap:wrap;
+}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-logo{font-size:1.6rem;line-height:1}
+.nav-title{font-family:'Fredoka One',cursive;font-size:1.05rem;color:#2D2D2D}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-link{font-family:'Fredoka One',cursive;font-size:0.85rem;padding:5px 14px;border-radius:999px;border:2.5px solid #E0D8CC;color:#999;text-decoration:none;transition:all 0.15s;background:transparent}
+.nav-link:hover{background:#FFF0E0;border-color:#F4A261;color:#F4A261}
+.nav-link.active{background:#F4A261;border-color:#F4A261;color:#fff}
+.page-strip-fun{
+  padding:1rem 1.5rem;display:flex;align-items:center;gap:12px;
+  border-bottom:3px dashed #FFE0B2;background:rgba(255,251,240,0.7);
+}
+.page-strip-fun .week-badge-fun{
+  background:#F4A261;color:#fff;font-family:'Fredoka One',cursive;
+  font-size:0.75rem;padding:4px 14px;border-radius:999px;letter-spacing:1px;
+}
+.page-strip-fun h2{font-family:'Fredoka One',cursive;font-size:1.15rem;color:#2D2D2D}
+
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-brand">
+    <span class="nav-logo">🍽️</span>
+    <span class="nav-title">Toni Fowler's Restaurant</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">🏠 Home</a>
+    <a class="nav-link" href="week1.html">Week 1</a>
+    <a class="nav-link active" href="week2.html">Week 2</a>
+    <a class="nav-link" href="week3.html">Week 3</a>
+    <a class="nav-link" href="week4.html">Week 4</a>
+  </div>
+</nav>
+<div class="page-strip-fun">
+  <span class="week-badge-fun">WEEK 2</span>
+  <h2>Production Map 🗺️</h2>
+</div>
+
+<!-- ══════════════ TITLE SCREEN ══════════════ -->
+<div id="screen-title" class="screen active">
+  <span class="title-badge">Week 2 · Production Map</span>
+  <h1 class="title-main">Farmer's<br>Production <em>Map</em></h1>
+  <p class="title-sub">Trace the journey of Filipino food.</p>
+
+  <div class="staple-pick">
+    <div class="staple-card rice" onclick="startGame('rice')">
+      <span class="s-emoji">🌾</span>
+      <span class="s-name">Bigas (Rice)</span>
+      <span class="s-tagline">Palayan</span>
+    </div>
+    <div class="staple-card bangus" onclick="startGame('bangus')">
+      <span class="s-emoji">🐟</span>
+      <span class="s-name">Bangus</span>
+      <span class="s-tagline">Fishpond</span>
+    </div>
+    <div class="staple-card itlog" onclick="startGame('itlog')">
+      <span class="s-emoji">🥚</span>
+      <span class="s-name">Itlog (Eggs)</span>
+      <span class="s-tagline">Poultry</span>
+    </div>
+  </div>
+
+  <p class="title-note">You are the farmer. Guide your product from the source all the way to the family table</p>
+</div>
+
+<!-- ══════════════ GAME SCREEN ══════════════ -->
+<div id="screen-game" class="screen">
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="back-btn" onclick="goHome()">←</button>
+      <span class="game-title">Production Map</span>
+      <span class="staple-chip" id="staple-chip"></span>
+    </div>
+    <div class="topbar-right">
+      <div class="hud-pill">⭐ <span id="score-display">0</span></div>
+      <div class="hud-pill" id="phase-pill">Phase 1/3</div>
+    </div>
+  </div>
+
+  <div class="progress-strip">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+
+  <div id="game-content"></div>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════
+const STAPLES = {
+
+  rice: {
+    name:"Bigas (Rice)", emoji:"🌾", chip:"🌾 Rice",
+    color:"#E8A020", colorLight:"#FFF3D0", colorDark:"#7A5C00",
+    chain:[
+      {id:1,emoji:"👨‍🌾",name:"Magsasaka",role:"Farmer plants & harvests palay",price:"₱18/kg",priceNum:18,gain:null,stressor:"typhoon"},
+      {id:2,emoji:"🌾",name:"Palayan",role:"Rice field — growing stage",price:"₱18/kg",priceNum:18,gain:"+₱0",stressor:null},
+      {id:3,emoji:"🏭",name:"Rice Mill",role:"Palay is milled into bigas",price:"₱35/kg",priceNum:35,gain:"+₱17",stressor:"drought"},
+      {id:4,emoji:"🚛",name:"Bodega / Wholesaler",role:"Buys in bulk, stores & ships",price:"₱44/kg",priceNum:44,gain:"+₱9",stressor:null},
+      {id:5,emoji:"🛒",name:"Palengke / Retailer",role:"Sells to households",price:"₱52/kg",priceNum:52,gain:"+₱8",stressor:"price_hike"},
+      {id:6,emoji:"🏠",name:"Mamimili (Consumer)",role:"Family buys rice for daily meals",price:"₱52/kg",priceNum:52,gain:null,stressor:null},
+    ],
+    stressors:{
+      typhoon:{
+        emoji:"🌀", name:"Bagyong Dumating!",
+        desc:"A typhoon hits the rice fields just before harvest. Floods damage 30% of the crop, reducing yield and increasing production cost for farmers.",
+        responses:[
+          {emoji:"🌱",label:"Plant flood-resistant varieties",desc:"Use IRRI-developed rice strains next season.",correct:true},
+          {emoji:"💧",label:"Build more irrigation canals",desc:"More water during floods is the last thing needed.",correct:false},
+          {emoji:"📋",label:"Apply for crop insurance",desc:"PCIC covers losses — farmer gets partial compensation.",correct:true},
+          {emoji:"🔥",label:"Burn leftover stubble",desc:"Releases carbon, makes soil worse — bad idea.",correct:false},
+        ]
+      },
+      drought:{
+        emoji:"☀️", name:"Tagtuyot (Drought)!",
+        desc:"El Niño causes severe drought. The rice mill is running low because palay supply is scarce. Water for milling is also limited.",
+        responses:[
+          {emoji:"💧",label:"Use SRI (System of Rice Intensification)",desc:"Saves water by using less seedlings per plot.",correct:true},
+          {emoji:"🚿",label:"Increase irrigation pumping 24/7",desc:"Burns fuel, depletes groundwater — costly.",correct:false},
+          {emoji:"🗂️",label:"Coordinate with NIA water schedule",desc:"National Irrigation Authority prioritizes water sharing.",correct:true},
+          {emoji:"⛏️",label:"Dig deeper wells immediately",desc:"Long-term fix but too slow for an active drought.",correct:false},
+        ]
+      },
+      price_hike:{
+        emoji:"📈", name:"Presyo ng Bigas Tumaas!",
+        desc:"Global rice prices spike due to export bans from Vietnam & India. Local retailers are forced to raise prices, making rice unaffordable for poor families.",
+        responses:[
+          {emoji:"🏪",label:"NFA release buffer stocks",desc:"National Food Authority releases cheap rice reserves.",correct:true},
+          {emoji:"💸",label:"Allow unlimited rice imports",desc:"Floods market but hurts local farmers long-term.",correct:false},
+          {emoji:"🤝",label:"Conduct Kadiwa rolling stores",desc:"Government sells rice directly to communities at low price.",correct:true},
+          {emoji:"🚫",label:"Impose price freeze on all goods",desc:"Causes hoarding and black market trading.",correct:false},
+        ]
+      }
+    },
+    insight:"🌾 The farmer earns only ₱18/kg but the consumer pays ₱52/kg. That's a ₱34 gap! Most of the markup goes to milling, transport, and retail — not the farmer.",
+    finalMsg:"Rice travels from a flooded palayan to your meal in about 3–6 months. Yet the farmer — who does the hardest work — earns only 35% of what you pay at the palengke. 💔"
+  },
+
+  bangus: {
+    name:"Bangus (Milkfish)", emoji:"🐟", chip:"🐟 Bangus",
+    color:"#2196A8", colorLight:"#D0F4F7", colorDark:"#0A5060",
+    chain:[
+      {id:1,emoji:"👨‍🌾",name:"Isda-Alaga (Fish Farmer)",role:"Raises bangus fry in fishpond",price:"₱90/kg",priceNum:90,gain:null,stressor:"fishkill"},
+      {id:2,emoji:"🐠",name:"Fishpond / Fishcage",role:"Bangus grows for 4–6 months",price:"₱90/kg",priceNum:90,gain:"+₱0",stressor:null},
+      {id:3,emoji:"🧊",name:"Fish Dealer / Buyer",role:"Buys harvest, adds ice for transport",price:"₱115/kg",priceNum:115,gain:"+₱25",stressor:"transport"},
+      {id:4,emoji:"🚚",name:"Cold Storage / Bodega",role:"Stores & distributes to wet markets",price:"₱130/kg",priceNum:130,gain:"+₱15",stressor:null},
+      {id:5,emoji:"🛒",name:"Wet Market Tindera",role:"Sells fresh bangus per kilo",price:"₱150/kg",priceNum:150,gain:"+₱20",stressor:"pollution"},
+      {id:6,emoji:"🍽️",name:"Mamimili (Consumer)",role:"Buys for sinigang, bangsilog, inihaw",price:"₱150/kg",priceNum:150,gain:null,stressor:null},
+    ],
+    stressors:{
+      fishkill:{
+        emoji:"💀",name:"Fish Kill sa Dagat!",
+        desc:"Red tide (harmful algal bloom) strikes Laguna de Bay. Thousands of bangus die overnight. The farmer loses an entire harvest season worth hundreds of thousands of pesos.",
+        responses:[
+          {emoji:"🔬",label:"Monitor water quality daily",desc:"Early detection through BFAR testing prevents mass loss.",correct:true},
+          {emoji:"🐟",label:"Add more fish to replace losses",desc:"Introducing new fish into contaminated water worsens it.",correct:false},
+          {emoji:"🚨",label:"Report to BFAR immediately",desc:"Bureau of Fisheries issues warnings and halts harvests.",correct:true},
+          {emoji:"🌊",label:"Open fishpond to open ocean",desc:"Spreads contamination — illegal and dangerous.",correct:false},
+        ]
+      },
+      transport:{
+        emoji:"⛽",name:"Taas ng Gasolina!",
+        desc:"Fuel prices hit record highs. The cost of transporting bangus from Dagupan to Metro Manila rises sharply, squeezing fish dealer margins and raising consumer prices.",
+        responses:[
+          {emoji:"🚢",label:"Use cargo boats via waterways",desc:"Cheaper and lower-emission than trucks for coastal routes.",correct:true},
+          {emoji:"✈️",label:"Airfreight all bangus",desc:"Extremely costly — only for premium export markets.",correct:false},
+          {emoji:"🤝",label:"Join fisherfolk transport cooperative",desc:"Shared logistics cuts individual fuel cost per kilo.",correct:true},
+          {emoji:"❄️",label:"Stop using ice to save money",desc:"Fish spoils faster — leads to more losses.",correct:false},
+        ]
+      },
+      pollution:{
+        emoji:"🏭",name:"Polusyon sa Ilog!",
+        desc:"Industrial effluents from nearby factories contaminate the river where wet market vendors source their supply. Water quality drops and some fish are unsafe to sell.",
+        responses:[
+          {emoji:"📋",label:"File complaint with DENR",desc:"Department of Environment enforces the Clean Water Act.",correct:true},
+          {emoji:"🚿",label:"Wash fish thoroughly before selling",desc:"Does not remove dissolved chemical pollutants.",correct:false},
+          {emoji:"🌿",label:"Support mangrove replanting drives",desc:"Mangroves filter pollutants and protect coastal fisheries.",correct:true},
+          {emoji:"🔇",label:"Ignore it — customers won't notice",desc:"Dangerous and unethical — causes public health risk.",correct:false},
+        ]
+      }
+    },
+    insight:"🐟 The bangus farmer earns ₱90/kg but the consumer pays ₱150/kg — a ₱60 gap. Ice, transport, cold storage, and retail each take a cut before it reaches your plate.",
+    finalMsg:"Bangus farmed in Dagupan takes 4–6 months to raise, yet the journey from fishpond to wet market takes only 24–48 hours. The fish dealer and transporter together earn more per kilo than the farmer who raised it. 🐠"
+  },
+
+  itlog: {
+    name:"Itlog (Eggs)", emoji:"🥚", chip:"🥚 Itlog",
+    color:"#D4550A", colorLight:"#FDEEDD", colorDark:"#7A2800",
+    chain:[
+      {id:1,emoji:"👩‍🌾",name:"Mag-aalaga ng Manok",role:"Poultry farmer raises layer hens",price:"₱6/pc",priceNum:6,gain:null,stressor:"birdflu"},
+      {id:2,emoji:"🐔",name:"Poultry Farm",role:"Layer hens produce eggs daily",price:"₱6/pc",priceNum:6,gain:"+₱0",stressor:null},
+      {id:3,emoji:"🏭",name:"Egg Grader / Packer",role:"Eggs sorted by size, cleaned & packed",price:"₱8/pc",priceNum:8,gain:"+₱2",stressor:"feed"},
+      {id:4,emoji:"🚐",name:"Wholesaler / Distributor",role:"Buys per tray, delivers to markets",price:"₱9/pc",priceNum:9,gain:"+₱1",stressor:null},
+      {id:5,emoji:"🛒",name:"Tindahan / Supermarket",role:"Sells per piece or per tray",price:"₱12/pc",priceNum:12,gain:"+₱3",stressor:"demand"},
+      {id:6,emoji:"🍳",name:"Mamimili (Consumer)",role:"Cooks itlog adobo, tortang talong, etc.",price:"₱12/pc",priceNum:12,gain:null,stressor:null},
+    ],
+    stressors:{
+      birdflu:{
+        emoji:"🦠",name:"Bird Flu Outbreak!",
+        desc:"Avian influenza (H5N1) is detected in a nearby poultry farm. The government orders culling of thousands of chickens within a 1-km radius to contain the disease.",
+        responses:[
+          {emoji:"😷",label:"Implement strict biosecurity measures",desc:"Limit farm visitors, disinfect footwear, use PPE.",correct:true},
+          {emoji:"🐔",label:"Move all chickens to open fields",desc:"Spreads disease faster — completely wrong.",correct:false},
+          {emoji:"💉",label:"Vaccinate remaining flock immediately",desc:"DA provides free vaccines to contain the spread.",correct:true},
+          {emoji:"📦",label:"Sell eggs quickly before news spreads",desc:"Illegal and dangerous — spreading infected products.",correct:false},
+        ]
+      },
+      feed:{
+        emoji:"🌽",name:"Mahal ang Pinakaain!",
+        desc:"The price of corn and soya (chicken feed ingredients) doubled due to the Ukraine-Russia war affecting global supply chains. Poultry farmers' production cost soars.",
+        responses:[
+          {emoji:"🌾",label:"Use locally-sourced corn & maggots",desc:"Black soldier fly larvae are a sustainable local feed source.",correct:true},
+          {emoji:"🐔",label:"Feed chickens less to save money",desc:"Undernourished hens lay fewer and smaller eggs.",correct:false},
+          {emoji:"🤝",label:"Join a feeds buying cooperative",desc:"Bulk purchasing with neighbors lowers cost per sack.",correct:true},
+          {emoji:"🏪",label:"Import all feed from China",desc:"Expensive shipping fees negate any savings.",correct:false},
+        ]
+      },
+      demand:{
+        emoji:"📉",name:"Bagsak ang Presyo ng Itlog!",
+        desc:"During Holy Week, demand drops sharply as many Filipinos avoid meat and eggs. Oversupply hits the market — farmers are forced to sell at a loss.",
+        responses:[
+          {emoji:"❄️",label:"Store eggs in cold storage",desc:"Eggs can be stored 3–5 weeks if properly refrigerated.",correct:true},
+          {emoji:"🗑️",label:"Dispose of excess eggs",desc:"Massive waste and economic loss — avoidable.",correct:false},
+          {emoji:"🏫",label:"Donate to school feeding programs",desc:"DepEd partnerships provide alternative demand channel.",correct:true},
+          {emoji:"🔝",label:"Raise egg prices to recover losses",desc:"Higher prices during low demand drives away buyers.",correct:false},
+        ]
+      }
+    },
+    insight:"🥚 The farmer earns only ₱6 per egg but the consumer pays ₱12 — double! Feed, grading, packaging, and retail take the other half before the egg reaches your frying pan.",
+    finalMsg:"One egg is produced every 26 hours by a layer hen. A poultry farmer manages thousands of hens, yet earns just ₱6 per egg — while retailers earn ₱3 per egg for simply storing and selling. 🐣"
+  }
+};
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+let currentStaple = null;
+let currentPhase  = 0; // 0=chain, 1=stressor, 2=price, 3=final
+let score = 0;
+let draggedEl = null;
+let placedCards = []; // ordered chain cards placed so far
+let stressorHits = [];// which stressors triggered
+let stressorIdx  = 0; // which stressor we're on
+let wrongPenalty = 0;
+
+// ══════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════
+function $(id){return document.getElementById(id);}
+
+function setCSSVars(s){
+  document.documentElement.style.setProperty('--acc',s.color);
+  document.documentElement.style.setProperty('--acc-light',s.colorLight);
+  document.documentElement.style.setProperty('--acc-dark',s.colorDark);
+}
+
+function showToast(msg,type){
+  const t=$('toast');
+  t.textContent=msg; t.className='show '+(type||'');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.className='',2000);
+}
+
+function setProgress(pct){
+  $('progress-fill').style.width=pct+'%';
+  $('progress-fill').style.background=currentStaple.color;
+}
+
+function updateHUD(){
+  $('score-display').textContent=score;
+  const phases=['1/3','1/3','2/3','3/3'];
+  $('phase-pill').textContent='Phase '+(phases[currentPhase]||'3/3');
+}
+
+// ══════════════════════════════════════════
+//  NAV
+// ══════════════════════════════════════════
+function goHome(){
+  $('screen-title').classList.add('active');
+  $('screen-game').classList.remove('active');
+  score=0; currentPhase=0; placedCards=[]; stressorHits=[]; stressorIdx=0; wrongPenalty=0;
+}
+
+function startGame(key){
+  currentStaple = STAPLES[key];
+  setCSSVars(currentStaple);
+  $('screen-title').classList.remove('active');
+  $('screen-game').classList.add('active');
+  const chip=$('staple-chip');
+  chip.textContent=currentStaple.chip;
+  chip.style.background=currentStaple.color;
+  score=0; currentPhase=0; placedCards=[]; stressorHits=[]; stressorIdx=0; wrongPenalty=0;
+  renderChainPhase();
+}
+
+// ══════════════════════════════════════════
+//  PHASE 0 — CHAIN SORT
+// ══════════════════════════════════════════
+function renderChainPhase(){
+  currentPhase=0;
+  setProgress(5);
+  updateHUD();
+  const s=currentStaple;
+  const shuffled=[...s.chain].sort(()=>Math.random()-0.5);
+
+  const html=`
+    <div class="phase-header">
+      <div class="phase-number" style="background:${s.color}">1</div>
+      <div class="phase-info">
+        <h2>Build the Supply Chain Map 🗺️</h2>
+        <p>Drag the cards below into the correct order — from farm all the way to the family table. Who comes first? Who comes last?</p>
+      </div>
+    </div>
+    <div class="chain-area">
+      <div class="drop-slots" id="drop-slots">
+        ${s.chain.map((_,i)=>`
+          <div class="slot" id="slot-${i}" data-index="${i}" ondragover="slotDragOver(event,this)" ondragleave="slotDragLeave(this)" ondrop="slotDrop(event,this)">
+            <span class="slot-label">Step ${i+1}</span>
+          </div>`).join('')}
+      </div>
+      <h3 style="font-family:'Baloo 2',cursive;font-size:0.9rem;color:var(--muted);text-align:center;margin-bottom:8px">— Card Pool — drag from here —</h3>
+      <div class="card-pool" id="card-pool" ondragover="poolDragOver(event)" ondrop="poolDrop(event)">
+        ${shuffled.map(c=>chainCardHTML(c)).join('')}
+      </div>
+      <button class="check-btn" id="check-btn" style="background:${s.color}" onclick="checkChain()">✅ Check My Map!</button>
+    </div>`;
+
+  $('game-content').innerHTML=html;
+  attachCardListeners();
+}
+
+function chainCardHTML(c){
+  return `<div class="chain-card" id="cc-${c.id}" draggable="true"
+    data-id="${c.id}"
+    ondragstart="cardDragStart(event,this)" ondragend="cardDragEnd(this)">
+    <span class="cc-emoji">${c.emoji}</span>
+    <div class="cc-info">
+      <div class="cc-name">${c.name}</div>
+      <div class="cc-role">${c.role}</div>
+    </div>
+    <span class="cc-price" style="background:${currentStaple.color}">${c.price}</span>
+  </div>`;
+}
+
+function attachCardListeners(){
+  document.querySelectorAll('.chain-card').forEach(el=>{
+    let clone;
+    el.addEventListener('touchstart',e=>{
+      const t=e.touches[0];
+      draggedEl=el;
+      clone=el.cloneNode(true);
+      clone.style.cssText=`position:fixed;z-index:9999;opacity:0.85;pointer-events:none;
+        transform:scale(1.05) rotate(2deg);width:${el.offsetWidth}px;
+        left:${t.clientX-el.offsetWidth/2}px;top:${t.clientY-40}px;`;
+      document.body.appendChild(clone);
+      el.classList.add('dragging');
+    },{passive:true});
+    el.addEventListener('touchmove',e=>{
+      e.preventDefault();
+      const t=e.touches[0];
+      if(clone){clone.style.left=t.clientX-el.offsetWidth/2+'px';clone.style.top=t.clientY-40+'px';}
+      document.querySelectorAll('.slot').forEach(z=>z.classList.remove('drag-over'));
+      const under=document.elementFromPoint(t.clientX,t.clientY);
+      under?.closest('.slot')?.classList.add('drag-over');
+    },{passive:false});
+    el.addEventListener('touchend',e=>{
+      if(clone){clone.remove();clone=null;}
+      el.classList.remove('dragging');
+      const t=e.changedTouches[0];
+      document.querySelectorAll('.slot').forEach(z=>z.classList.remove('drag-over'));
+      const under=document.elementFromPoint(t.clientX,t.clientY);
+      const slot=under?.closest('.slot');
+      if(slot) dropIntoSlot(slot,el);
+      draggedEl=null;
+    });
+  });
+}
+
+function cardDragStart(e,el){draggedEl=el;setTimeout(()=>el.classList.add('dragging'),0);e.dataTransfer.effectAllowed='move';}
+function cardDragEnd(el){el.classList.remove('dragging');draggedEl=null;}
+function slotDragOver(e,slot){e.preventDefault();slot.classList.add('drag-over');}
+function slotDragLeave(slot){slot.classList.remove('drag-over');}
+function slotDrop(e,slot){e.preventDefault();slot.classList.remove('drag-over');if(draggedEl)dropIntoSlot(slot,draggedEl);}
+function poolDragOver(e){e.preventDefault();}
+function poolDrop(e){
+  e.preventDefault();
+  if(draggedEl){
+    // return card to pool
+    const pool=$('card-pool');
+    const existing=pool.querySelector(`#cc-${draggedEl.dataset.id}`);
+    if(!existing) pool.appendChild(draggedEl);
+    // clear any slot it was in
+    document.querySelectorAll('.slot').forEach(s=>{
+      if(s.contains(draggedEl)){s.innerHTML='';s.classList.remove('filled');s.innerHTML=`<span class="slot-label">Step ${parseInt(s.dataset.index)+1}</span>`;}
+    });
+  }
+}
+
+function dropIntoSlot(slot,card){
+  // if slot already has a card, swap it back to pool
+  const existing=slot.querySelector('.chain-card');
+  if(existing){
+    const pool=$('card-pool');
+    pool.appendChild(existing);
+  }
+  // remove card from wherever it was
+  const prevSlot=document.querySelector(`.slot .chain-card[data-id="${card.dataset.id}"]`)?.closest('.slot');
+  if(prevSlot&&prevSlot!==slot){
+    prevSlot.innerHTML='';
+    prevSlot.classList.remove('filled');
+    prevSlot.innerHTML=`<span class="slot-label">Step ${parseInt(prevSlot.dataset.index)+1}</span>`;
+  }
+  slot.innerHTML='';
+  slot.classList.add('filled');
+  slot.appendChild(card);
+}
+
+function checkChain(){
+  const s=currentStaple;
+  const slots=document.querySelectorAll('.slot');
+  let allFilled=true;
+  slots.forEach(sl=>{if(!sl.querySelector('.chain-card'))allFilled=false;});
+  if(!allFilled){showToast('⚠️ Fill all steps first!','bad');return;}
+
+  let correct=0;
+  slots.forEach((sl,i)=>{
+    const card=sl.querySelector('.chain-card');
+    const id=parseInt(card.dataset.id);
+    if(id===s.chain[i].id){
+      correct++;
+      card.classList.add('correct-flash');
+      setTimeout(()=>card.classList.remove('correct-flash'),600);
+    } else {
+      card.classList.add('wrong-flash');
+      setTimeout(()=>card.classList.remove('wrong-flash'),500);
+      wrongPenalty++;
+    }
+  });
+
+  const allCorrect=correct===s.chain.length;
+  if(allCorrect){
+    score+=50;
+    showToast('🎉 Perfect order! +50 pts','good');
+    setTimeout(()=>renderStressorPhase(),1000);
+  } else {
+    score=Math.max(0,score-10);
+    showToast(`❌ ${correct}/${s.chain.length} correct. Try again! -10`,'bad');
+    updateHUD();
+  }
+}
+
+// ══════════════════════════════════════════
+//  PHASE 1 — STRESSORS
+// ══════════════════════════════════════════
+function renderStressorPhase(){
+  currentPhase=1;
+  setProgress(40);
+  updateHUD();
+  const s=currentStaple;
+  // collect which stressors exist
+  stressorHits=s.chain.filter(c=>c.stressor).map(c=>c.stressor);
+  stressorIdx=0;
+  renderOneStressor();
+}
+
+function renderOneStressor(){
+  const s=currentStaple;
+  if(stressorIdx>=stressorHits.length){
+    setTimeout(()=>renderPricePhase(),600);
+    return;
+  }
+  const key=stressorHits[stressorIdx];
+  const st=s.stressors[key];
+  const pct=40+(stressorIdx/stressorHits.length)*25;
+  setProgress(pct);
+
+  const html=`
+    <div class="phase-header">
+      <div class="phase-number" style="background:#E74C3C">⚠️</div>
+      <div class="phase-info">
+        <h2>Environmental Stressor! ${stressorIdx+1}/${stressorHits.length}</h2>
+        <p>A stressor hits your supply chain. Choose the BEST responses (there may be more than one correct answer).</p>
+      </div>
+    </div>
+    <div class="stressor-scene">
+      <div class="stressor-banner" style="background:${s.colorLight};border-left:5px solid ${s.color}">
+        <span class="s-icon">${st.emoji}</span>
+        <div>
+          <h3>${st.name}</h3>
+          <p>${st.desc}</p>
+        </div>
+      </div>
+      <div class="response-pool" id="response-pool">
+        ${st.responses.map((r,i)=>`
+          <div class="response-card" id="resp-${i}" onclick="pickResponse(${i})">
+            <span class="r-emoji">${r.emoji}</span>
+            <div class="r-label">${r.label}</div>
+            <div class="r-desc">${r.desc}</div>
+          </div>`).join('')}
+      </div>
+      <button class="check-btn" id="stressor-btn" style="background:${s.color}" onclick="checkStressor()">✅ Submit Response</button>
+    </div>`;
+
+  $('game-content').innerHTML=html;
+}
+
+let selectedResponses=new Set();
+function pickResponse(i){
+  selectedResponses.has(i)?selectedResponses.delete(i):selectedResponses.add(i);
+  document.querySelectorAll('.response-card').forEach((el,idx)=>{
+    el.style.borderColor=selectedResponses.has(idx)?currentStaple.color:'#E0D8CC';
+    el.style.background=selectedResponses.has(idx)?currentStaple.colorLight:'';
+  });
+}
+
+function checkStressor(){
+  if(selectedResponses.size===0){showToast('⚠️ Pick at least one!','bad');return;}
+  const s=currentStaple;
+  const st=s.stressors[stressorHits[stressorIdx]];
+  let pts=0;
+  st.responses.forEach((r,i)=>{
+    const el=document.getElementById('resp-'+i);
+    if(r.correct&&selectedResponses.has(i)){el.classList.add('correct-pick');pts+=15;}
+    else if(!r.correct&&selectedResponses.has(i)){el.classList.add('wrong-pick');pts-=5;}
+    else if(r.correct&&!selectedResponses.has(i)){el.classList.add('correct-pick');} // show missed
+  });
+  score=Math.max(0,score+pts);
+  showToast(pts>0?`🌟 Good response! +${pts} pts`:`❌ Rethink that! ${pts} pts`,'');
+  updateHUD();
+  $('stressor-btn').disabled=true;
+  selectedResponses=new Set();
+  setTimeout(()=>{stressorIdx++;renderOneStressor();},1800);
+}
+
+// ══════════════════════════════════════════
+//  PHASE 2 — PRICE REVEAL
+// ══════════════════════════════════════════
+function renderPricePhase(){
+  currentPhase=2;
+  setProgress(70);
+  updateHUD();
+  const s=currentStaple;
+
+  let rows='';
+  s.chain.forEach((c,i)=>{
+    if(i>0) rows+=`<div class="arrow-down">↓</div>`;
+    const delay=(i*0.12)+'s';
+    rows+=`<div class="price-row" style="animation-delay:${delay};border-left:4px solid ${s.color}">
+      <span class="pr-emoji">${c.emoji}</span>
+      <div>
+        <div class="pr-actor">${c.name}</div>
+        ${c.gain?`<div class="pr-gain">Markup: ${c.gain}</div>`:''}
+      </div>
+      <div style="text-align:right">
+        <div class="pr-price" style="color:${s.color}">${c.price}</div>
+      </div>
+    </div>`;
+  });
+
+  const farmerPrice=s.chain[0].priceNum;
+  const consumerPrice=s.chain[s.chain.length-1].priceNum;
+  const gap=consumerPrice-farmerPrice;
+  const farmerPct=Math.round((farmerPrice/consumerPrice)*100);
+
+  const html=`
+    <div class="phase-header">
+      <div class="phase-number" style="background:${s.color}">₱</div>
+      <div class="phase-info">
+        <h2>Economic Transactions 💰</h2>
+        <p>Watch how the price grows at each step of the supply chain — from the farmer's price to what you pay at the market.</p>
+      </div>
+    </div>
+    <div class="price-chain">${rows}</div>
+    <div class="price-insight" style="background:${s.colorLight};border-left:4px solid ${s.color};max-width:700px;margin:0 auto 1rem;padding:1rem 1.5rem;">
+      ${s.insight}
+    </div>
+    <div style="max-width:700px;margin:0 auto 1.5rem;padding:0 1.2rem;">
+      <div style="background:#fff;border-radius:16px;padding:1.2rem 1.5rem;box-shadow:0 4px 14px rgba(0,0,0,0.07)">
+        <div class="summary-row"><span>🌱 Farmer earns</span><span style="color:${s.color}">${s.chain[0].price}</span></div>
+        <div class="summary-row"><span>🏠 Consumer pays</span><span style="color:#E74C3C">${s.chain[s.chain.length-1].price}</span></div>
+        <div class="summary-divider"></div>
+        <div class="summary-row"><span>📊 Price gap</span><span style="color:#E74C3C">+₱${gap} (${100-farmerPct}% lost to middlemen)</span></div>
+        <div class="summary-row"><span>👨‍🌾 Farmer gets</span><span style="color:${s.color}">${farmerPct}% of final price</span></div>
+      </div>
+    </div>
+    <div style="text-align:center;padding:0 1rem 1rem">
+      <button class="check-btn" style="background:${s.color}" onclick="renderFinalMap()">🗺️ See the Full Production Map!</button>
+    </div>`;
+
+  $('game-content').innerHTML=html;
+}
+
+// ══════════════════════════════════════════
+//  PHASE 3 — FINAL MAP
+// ══════════════════════════════════════════
+function renderFinalMap(){
+  currentPhase=3;
+  setProgress(100);
+  score+=20;
+  updateHUD();
+  const s=currentStaple;
+
+  let nodes='';
+  s.chain.forEach((c,i)=>{
+    if(i>0) nodes+=`<div class="map-connector"></div>`;
+    const stressorKey=c.stressor;
+    const stressorTag=stressorKey?`<span class="stressor-tag">⚠️ ${s.stressors[stressorKey].name}</span>`:'';
+    nodes+=`<div class="map-node" style="animation-delay:${i*0.15}s;border-left-color:${s.color}">
+      <span class="mn-emoji">${c.emoji}</span>
+      <div class="mn-info">
+        <div class="mn-name">${c.name}</div>
+        <div class="mn-desc">${c.role}</div>
+        ${stressorTag}
+      </div>
+      <span class="mn-price" style="background:${s.color}">${c.price}</span>
+    </div>`;
+  });
+
+  const farmerPrice=s.chain[0].priceNum;
+  const consumerPrice=s.chain[s.chain.length-1].priceNum;
+
+  const html=`
+    <div class="phase-header">
+      <div class="phase-number" style="background:${s.color}">🗺️</div>
+      <div class="phase-info">
+        <h2>Production Map — Complete! 🎉</h2>
+        <p>Here is the full journey of <strong>${s.name}</strong> from farm to family table, with all stressors and economic transactions.</p>
+      </div>
+    </div>
+    <div class="final-map">
+      <div class="map-path">${nodes}</div>
+
+      <div class="summary-box" style="background:${s.colorLight};border-left:5px solid ${s.color}">
+        <h3>📊 Supply Chain Summary</h3>
+        <div class="summary-row"><span>👨‍🌾 Farmer's price</span><span>${s.chain[0].price}</span></div>
+        <div class="summary-row"><span>🏠 Consumer price</span><span>${s.chain[s.chain.length-1].price}</span></div>
+        <div class="summary-row"><span>⚠️ Stressors encountered</span><span>${stressorHits.length}</span></div>
+        <div class="summary-divider"></div>
+        <div class="summary-row"><span>💸 Price gap (farm→consumer)</span><span class="summary-gap">+₱${consumerPrice-farmerPrice}</span></div>
+      </div>
+
+      <div class="final-msg" style="background:${s.colorLight};border:2px solid ${s.color}">
+        ${s.finalMsg}
+      </div>
+
+      <div style="text-align:center;margin-bottom:1rem">
+        <div style="font-family:'Baloo 2',cursive;font-size:2rem;color:${s.color};font-weight:800;margin-bottom:0.3rem">
+          ⭐ ${score} pts
+        </div>
+        <div style="font-size:0.85rem;color:var(--muted);font-weight:700">Final Score</div>
+      </div>
+
+      <button class="play-again-btn" onclick="goHome()">🔄 Try Another Staple</button>
+      <a href="index.html" style="display:block;text-align:center;margin-top:0.8rem;font-family:'Fredoka One',cursive;font-size:0.9rem;color:#BBB;text-decoration:none">🏠 Back to Home</a>
+    </div>`;
+
+  $('game-content').innerHTML=html;
+}
+</script>
+</body>
+</html>

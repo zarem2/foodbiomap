@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toni Fowler's Restaurant 🍽️ | Jandal's Angels</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FFFBF0;
+  --shadow:0 6px 20px rgba(0,0,0,0.09);
+  --shadow-hover:0 14px 36px rgba(0,0,0,0.16);
+}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  min-height:100vh;
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(circle at 8% 12%, #FFE8D6 0%,transparent 38%),
+    radial-gradient(circle at 90% 78%, #D8F3DC 0%,transparent 38%),
+    radial-gradient(circle at 52% 52%, #FFE8E8 0%,transparent 50%),
+    radial-gradient(circle at 20% 80%, #E8E8FF 0%,transparent 35%);
+}
+
+/* floating decos */
+.deco{position:fixed;pointer-events:none;z-index:0;font-size:2.4rem;opacity:0.13;animation:floatDeco 7s ease-in-out infinite}
+.deco:nth-child(2){animation-delay:-2s}.deco:nth-child(3){animation-delay:-4s}
+.deco:nth-child(4){animation-delay:-1s}.deco:nth-child(5){animation-delay:-5s}
+.deco:nth-child(6){animation-delay:-3s}.deco:nth-child(7){animation-delay:-6s}
+@keyframes floatDeco{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-18px) rotate(5deg)}}
+
+/* ── NAV ── */
+nav{
+  background:rgba(255,251,240,0.92);
+  backdrop-filter:blur(8px);
+  border-bottom:3px solid #FFE0B2;
+  padding:0.9rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;gap:10px;flex-wrap:wrap;
+}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-logo{font-size:1.6rem;line-height:1}
+.nav-title{font-family:'Fredoka One',cursive;font-size:1.05rem;color:#2D2D2D;letter-spacing:0.3px}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-link{
+  font-family:'Fredoka One',cursive;font-size:0.85rem;
+  padding:5px 14px;border-radius:999px;
+  border:2.5px solid #E0D8CC;color:#999;
+  text-decoration:none;transition:all 0.15s;background:transparent;
+}
+.nav-link:hover{background:#FFF0E0;border-color:#F4A261;color:#F4A261}
+.nav-link.active{background:#F4A261;border-color:#F4A261;color:#fff}
+
+/* ── HERO ── */
+.hero{
+  max-width:820px;margin:0 auto;
+  padding:3rem 1.5rem 1.5rem;
+  text-align:center;position:relative;z-index:1;
+}
+.hero-badge{
+  display:inline-block;
+  background:#fff;border:3px solid #FFD166;border-radius:999px;
+  font-family:'Fredoka One',cursive;font-size:0.85rem;color:#F4A261;
+  padding:5px 18px;margin-bottom:1.2rem;
+  box-shadow:0 4px 12px rgba(244,162,97,0.2);
+}
+.hero h1{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(2.2rem,7vw,4rem);
+  color:#2D2D2D;line-height:1.05;
+  margin-bottom:0.4rem;
+  letter-spacing:0.5px;
+}
+.hero h1 .hl1{color:#FF6B6B}
+.hero h1 .hl2{color:#52B788}
+.hero h1 .hl3{color:#F4A261}
+.hero-sub{
+  font-size:1rem;color:#999;font-weight:700;
+  max-width:440px;margin:0.8rem auto 0;line-height:1.7;
+}
+.hero-chips{
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+  margin-top:1.6rem;
+}
+.hero-chip{
+  background:#fff;border:2.5px solid #E0D8CC;border-radius:999px;
+  font-size:0.8rem;font-weight:800;color:#777;
+  padding:5px 14px;
+  display:flex;align-items:center;gap:5px;
+}
+
+/* ── WEEK CARDS GRID ── */
+.weeks{
+  max-width:860px;margin:2.5rem auto 4rem;
+  padding:0 1.5rem;
+  position:relative;z-index:1;
+}
+.weeks-label{
+  font-family:'Fredoka One',cursive;font-size:1rem;color:#BBB;
+  text-align:center;margin-bottom:1.2rem;letter-spacing:1px;
+}
+.weeks-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:18px;
+}
+
+.week-card{
+  background:#fff;border-radius:28px;
+  border:3px solid transparent;
+  padding:1.8rem 1.5rem 1.5rem;
+  text-decoration:none;color:#2D2D2D;
+  box-shadow:var(--shadow);
+  transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;
+  display:block;position:relative;overflow:hidden;
+}
+.week-card:hover{transform:translateY(-7px) rotate(-1deg);box-shadow:var(--shadow-hover)}
+.week-card.w1:hover{border-color:#FF6B6B}
+.week-card.w2:hover{border-color:#F4A261}
+.week-card.w3:hover{border-color:#52B788}
+.week-card.w4:hover{border-color:#A78BFA}
+
+/* big emoji blob background */
+.week-card .blob{
+  position:absolute;right:-10px;top:-10px;
+  font-size:5rem;opacity:0.09;
+  pointer-events:none;line-height:1;
+  animation:floatDeco 5s ease-in-out infinite;
+}
+
+.week-card .wc-badge{
+  display:inline-block;font-family:'Fredoka One',cursive;
+  font-size:0.7rem;letter-spacing:1.5px;
+  padding:3px 12px;border-radius:999px;
+  color:#fff;margin-bottom:1rem;
+}
+.w1 .wc-badge{background:#FF6B6B}
+.w2 .wc-badge{background:#F4A261}
+.w3 .wc-badge{background:#52B788}
+.w4 .wc-badge{background:#A78BFA}
+
+.week-card .wc-icon{font-size:2.6rem;display:block;margin-bottom:0.7rem}
+.week-card h2{
+  font-family:'Fredoka One',cursive;
+  font-size:1.35rem;color:#2D2D2D;
+  margin-bottom:0.5rem;line-height:1.2;
+}
+.week-card p{font-size:0.8rem;font-weight:700;color:#AAA;line-height:1.65}
+.week-card .wc-cta{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:1.2rem;font-family:'Fredoka One',cursive;
+  font-size:0.88rem;border-radius:999px;
+  padding:7px 18px;color:#fff;border:none;
+  cursor:pointer;
+}
+.w1 .wc-cta{background:#FF6B6B}
+.w2 .wc-cta{background:#F4A261}
+.w3 .wc-cta{background:#52B788}
+.w4 .wc-cta{background:#A78BFA}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;padding:2rem 1rem;
+  font-family:'Fredoka One',cursive;font-size:0.9rem;color:#CCC;
+  position:relative;z-index:1;
+  border-top:2.5px dashed #FFE0B2;
+}
+footer span{color:#F4A261}
+
+@media(max-width:560px){
+  .weeks-grid{grid-template-columns:1fr}
+  nav{padding:0.7rem 1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="deco" style="top:5%;left:2%">🍎</div>
+<div class="deco" style="top:12%;right:4%">🌾</div>
+<div class="deco" style="top:45%;left:1%">🐟</div>
+<div class="deco" style="top:60%;right:2%">🥚</div>
+<div class="deco" style="bottom:18%;left:5%">🍕</div>
+<div class="deco" style="bottom:10%;right:6%">🧬</div>
+<div class="deco" style="top:30%;right:1%">🌽</div>
+
+<nav>
+  <div class="nav-brand">
+    <span class="nav-logo">🍽️</span>
+    <span class="nav-title">Toni Fowler's Restaurant</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link active" href="index.html">🏠 Home</a>
+    <a class="nav-link" href="week1.html">Week 1</a>
+    <a class="nav-link" href="week2.html">Week 2</a>
+    <a class="nav-link" href="week3.html">Week 3</a>
+    <a class="nav-link" href="week4.html">Week 4</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">A Fine Dining Journey from Genes's to Kitchen</div>
+  <h1>
+    Toni Fowler's<br>
+    <span class="hl1">Res</span><span class="hl2">tau</span><span class="hl3">rant!</span>
+  </h1>
+  <p class="hero-sub">This is a demo website of the assessments listed in the lesson plans. Hosted using Github Pages.</p>
+  <div class="hero-chips">
+    <span class="hero-chip">👥 Jandal's Angels</span>
+    <span class="hero-chip">📚 4 Weeks</span>
+    <span class="hero-chip">🌾 Food Science</span>
+  </div>
+</section>
+
+<section class="weeks">
+  <p class="weeks-label">— Pick your activity! —</p>
+  <div class="weeks-grid">
+
+    <a class="week-card w1" href="week1.html">
+      <span class="blob">🍎</span>
+      <span class="wc-badge">WEEK 1</span>
+      <span class="wc-icon">🍎🥔🧬</span>
+      <h2>Food Biological Map</h2>
+      <p>Drag food cards into the right category. Learn about Sexual, Asexual, or Biotech food production.</p>
+      <span class="wc-cta">Play now →</span>
+    </a>
+
+    <a class="week-card w2" href="week2.html">
+      <span class="blob">🗺️</span>
+      <span class="wc-badge">WEEK 2</span>
+      <span class="wc-icon">🌾🐟🥚</span>
+      <h2>Production Map</h2>
+      <p>Trace the source of Filipino foods: rice, bangus, or itlog. From the farm all the way to your dinner table.</p>
+      <span class="wc-cta">Start journey →</span>
+    </a>
+
+    <a class="week-card w3" href="week3.html">
+      <span class="blob">📢</span>
+      <span class="wc-badge">WEEK 3</span>
+      <span class="wc-icon">📢✊🌱</span>
+      <h2>Advocacy Case Proposals</h2>
+      <p>Post your Just Food campaign on the class freedom wall!</p>
+      <span class="wc-cta">View wall →</span>
+    </a>
+
+    <a class="week-card w4" href="week4.html">
+      <span class="blob">📄</span>
+      <span class="wc-badge">WEEK 4</span>
+      <span class="wc-icon">📄🔬📊</span>
+      <h2>Holistic System Report</h2>
+      <p>Submit your final report that connects everything, from genes to the kitchen table. </p>
+      <span class="wc-cta">Submit report →</span>
+    </a>
+
+  </div>
+</section>
+
+<footer>
+   <span>Jandal's Angels</span> · Toni Fowler's Restaurant 🍽️
+</footer>
+
+</body>
+</html>
